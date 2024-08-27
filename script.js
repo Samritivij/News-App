@@ -7,11 +7,26 @@ function reload() {
     window.location.reload();
 }
 
+// async function fetchNews(query) {
+//     const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
+//     const data = await res.json();
+//     bindData(data.articles);
+// }
 async function fetchNews(query) {
     const res = await fetch(`${url}${query}&apiKey=${API_KEY}`);
     const data = await res.json();
+
+    console.log("API Response:", data);  // Log the whole response
+    console.log("Articles:", data.articles);  // Log the articles array
+
+    if (!data.articles || data.articles.length === 0) {
+        console.error("No articles found");
+        return;
+    }
+
     bindData(data.articles);
 }
+
 
 function bindData(articles) {
     const cardsContainer = document.getElementById("cards-container");
